@@ -5,6 +5,7 @@ import ru.job4j.dreamjob.model.Post;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,5 +34,14 @@ public class PostStore {
 
     public Collection<Post> findAll() {
         return posts.values();
+    }
+
+    public Post findById(int id) {
+        return Optional.ofNullable(posts.get(id)).get();
+    }
+
+    public void updatePost(Post post) {
+        post.setCreated(LocalDateTime.now());
+        posts.replace(post.getId(), posts.get(post.getId()), post);
     }
 }
