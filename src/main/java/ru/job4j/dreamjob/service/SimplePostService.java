@@ -1,17 +1,17 @@
 package ru.job4j.dreamjob.service;
 
+import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.store.PostStore;
 
 import java.util.Collection;
 
+@Service
 public class SimplePostService implements PostService {
-    private static final SimplePostService INSTANCE = new SimplePostService();
-    private final PostStore postRepository = PostStore.instOf();
+    private final PostStore postRepository;
 
-
-    public static SimplePostService getInstance() {
-        return INSTANCE;
+    public SimplePostService(PostStore postRepository) {
+        this.postRepository = postRepository;
     }
 
     @Override
