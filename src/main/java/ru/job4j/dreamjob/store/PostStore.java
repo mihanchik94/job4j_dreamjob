@@ -37,11 +37,10 @@ public class PostStore {
     }
 
     public Post findById(int id) {
-        return Optional.ofNullable(posts.get(id)).get();
+        return posts.get(id);
     }
 
     public void updatePost(Post post) {
-        post.setCreated(LocalDateTime.now());
         posts.replace(post.getId(), posts.get(post.getId()), post);
     }
 }
