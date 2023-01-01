@@ -17,9 +17,9 @@ public class PostStore {
     private final AtomicInteger counter = new AtomicInteger(3);
 
     public PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "Beginner vacancy", LocalDateTime.now()));
-        posts.put(2, new Post(2, "Middle Java Job", "Position for people with 2+ years of experience", LocalDateTime.now()));
-        posts.put(3, new Post(3, "Senior Java Job", "Position for people with 5+ years of experience", LocalDateTime.now()));
+        posts.put(1, new Post(1, "Junior Java Job", "Beginner vacancy", LocalDateTime.now(), true));
+        posts.put(2, new Post(2, "Middle Java Job", "Position for people with 2+ years of experience", LocalDateTime.now(), true));
+        posts.put(3, new Post(3, "Senior Java Job", "Position for people with 5+ years of experience", LocalDateTime.now(), true));
     }
 
     public void add(Post post) {
