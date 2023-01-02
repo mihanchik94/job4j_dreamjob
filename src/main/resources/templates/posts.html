@@ -43,6 +43,7 @@
                 <th scope="col">Имя</th>
                 <th scope="col">Описание</th>
                 <th scope="col">Дата создания</th>
+                <th scope="col">Город</th>
             </tr>
             </thead>
             <tbody>
@@ -62,6 +63,7 @@
                 </td>
                 <td th:text="${post.description}"></td>
                 <td th:text="${post.created}"></td>
+                <td th:each="city: ${cities}" th:if="${post.cityId==city.id}" th:text="${city.name}"></td>
             </tr>
             </tbody>
         </table>

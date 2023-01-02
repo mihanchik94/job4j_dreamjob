@@ -8,15 +8,17 @@ public class Candidate {
     private String name;
     private String description;
     private LocalDateTime created;
+    private int cityId;
 
     public Candidate() {
     }
 
-    public Candidate(int id, String name, String description, LocalDateTime created) {
+    public Candidate(int id, String name, String description, LocalDateTime created, int cityId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
+        this.cityId = cityId;
     }
 
     public int getId() {
@@ -49,6 +51,14 @@ public class Candidate {
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     @Override

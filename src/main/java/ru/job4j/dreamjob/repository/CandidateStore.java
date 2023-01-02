@@ -1,4 +1,4 @@
-package ru.job4j.dreamjob.store;
+package ru.job4j.dreamjob.repository;
 
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
@@ -17,9 +17,9 @@ public class CandidateStore {
     private final AtomicInteger counter = new AtomicInteger(3);
 
     public CandidateStore() {
-        candidates.put(1, new Candidate(1, "Semenov Igor", "Without experience", LocalDateTime.now()));
-        candidates.put(2, new Candidate(2, "Gerasimova Ekaterina", "Experience: 3 years", LocalDateTime.now()));
-        candidates.put(3, new Candidate(3, "Sidorova Elena", "Experience: 1 year", LocalDateTime.now()));
+        candidates.put(1, new Candidate(1, "Semenov Igor", "Without experience", LocalDateTime.now(), 1));
+        candidates.put(2, new Candidate(2, "Gerasimova Ekaterina", "Experience: 3 years", LocalDateTime.now(), 2));
+        candidates.put(3, new Candidate(3, "Sidorova Elena", "Experience: 1 year", LocalDateTime.now(), 3));
     }
 
     public Collection<Candidate> findAll() {
