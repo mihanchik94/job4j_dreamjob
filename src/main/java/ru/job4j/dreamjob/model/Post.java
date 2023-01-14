@@ -10,17 +10,19 @@ public class Post {
     private LocalDateTime created;
     private boolean visible;
     private int cityId;
+    private int fileId;
 
     public Post() {
     }
 
-    public Post(int id, String name, String description, LocalDateTime created, boolean visible, int cityId) {
+    public Post(int id, String name, String description, LocalDateTime created, boolean visible, int cityId, int fileId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
         this.visible = visible;
         this.cityId = cityId;
+        this.fileId = fileId;
     }
 
     public int getId() {
@@ -73,6 +75,14 @@ public class Post {
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     @Override

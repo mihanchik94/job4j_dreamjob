@@ -12,16 +12,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
 @Repository
-public class PostStore {
+public class MemoryPostStore implements PostRepository{
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(3);
 
-    public PostStore() {
-        posts.put(1, new Post(1, "Junior Java Job", "Beginner vacancy", LocalDateTime.now(), true, 2));
-        posts.put(2, new Post(2, "Middle Java Job", "Position for people with 2+ years of experience", LocalDateTime.now(), true, 1));
-        posts.put(3, new Post(3, "Senior Java Job", "Position for people with 5+ years of experience", LocalDateTime.now(), true, 3));
+    public MemoryPostStore() {
+        posts.put(1, new Post(1, "Junior Java Job", "Beginner vacancy", LocalDateTime.now(), true, 2, 0));
+        posts.put(2, new Post(2, "Middle Java Job", "Position for people with 2+ years of experience", LocalDateTime.now(), true, 1, 0));
+        posts.put(3, new Post(3, "Senior Java Job", "Position for people with 5+ years of experience", LocalDateTime.now(), true, 3, 0));
     }
 
+    @Override
     public void add(Post post) {
         int id = counter.incrementAndGet();
         post.setId(id);
@@ -29,14 +30,22 @@ public class PostStore {
         posts.put(id, post);
     }
 
+    @Override
+    public boolean deleteById(int id) {
+        return posts.remove(id)!= null;
+    }
+
+    @Override
     public Collection<Post> findAll() {
         return posts.values();
     }
 
+    @Override
     public Post findById(int id) {
         return posts.get(id);
     }
 
+    @Override
     public void updatePost(Post post) {
         posts.replace(post.getId(), posts.get(post.getId()), post);
     }

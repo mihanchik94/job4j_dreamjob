@@ -3,13 +3,14 @@ package ru.job4j.dreamjob.controller;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.PostService;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @ThreadSafe
@@ -32,14 +33,18 @@ public class PostController {
 
     @GetMapping("/formAddPost")
     public String addPost(Model model) {
-        model.addAttribute("post", new Post(0, "Заполните название", "Заполните описание", LocalDateTime.now(), true, 1));
+        model.addAttribute("post", new Post(0, "Заполните название", "Заполните описание", LocalDateTime.now(), true, 1, 0));
         model.addAttribute("cities", cityService.findAll());
         return "addPost";
     }
 
     @PostMapping("/createPost")
-    public String createPost(@ModelAttribute Post post) {
-        postService.save(post);
+    public String createPost(@ModelAttribute Post post, @RequestParam MultipartFile file) {
+        try {
+            postService.save(post, new FileDto(file.getOriginalFilename(), file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "redirect:/posts";
     }
 
@@ -51,8 +56,12 @@ public class PostController {
     }
 
     @PostMapping("/updatePost")
-    public String updatePost(@ModelAttribute Post post) {
-        postService.update(post);
+    public String updatePost(@ModelAttribute Post post, @RequestParam MultipartFile file) {
+        try {
+            postService.update(post, new FileDto(file.getOriginalFilename(), file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "redirect:/posts";
     }
 }

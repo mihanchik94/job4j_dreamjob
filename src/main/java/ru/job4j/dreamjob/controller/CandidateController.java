@@ -3,14 +3,14 @@ package ru.job4j.dreamjob.controller;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.service.CandidateService;
 import ru.job4j.dreamjob.service.CityService;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @ThreadSafe
@@ -34,13 +34,17 @@ public class CandidateController {
     @GetMapping("/formAddCandidate")
     public String addCandidate(Model model) {
         model.addAttribute("cities", cityService.findAll());
-        model.addAttribute("candidate", new Candidate(0, "Заполните имя", "Заполните описание", LocalDateTime.now(), 1));
+        model.addAttribute("candidate", new Candidate(0, "Заполните имя", "Заполните описание", LocalDateTime.now(), 1, 0));
         return "addCandidate";
     }
 
     @PostMapping("/createCandidate")
-    public String createCandidate(@ModelAttribute Candidate candidate) {
-        service.save(candidate);
+    public String createCandidate(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file) {
+        try {
+            service.save(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "redirect:/candidates";
     }
 
@@ -52,8 +56,12 @@ public class CandidateController {
     }
 
     @PostMapping("/updateCandidate")
-    public String updateCandidate(@ModelAttribute Candidate candidate) {
-        service.update(candidate);
+    public String updateCandidate(@ModelAttribute Candidate candidate, @RequestParam MultipartFile file) {
+        try {
+            service.update(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return "redirect:/candidates";
     }
 }

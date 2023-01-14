@@ -9,16 +9,18 @@ public class Candidate {
     private String description;
     private LocalDateTime created;
     private int cityId;
+    private int fileId;
 
     public Candidate() {
     }
 
-    public Candidate(int id, String name, String description, LocalDateTime created, int cityId) {
+    public Candidate(int id, String name, String description, LocalDateTime created, int cityId, int fileId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.created = created;
         this.cityId = cityId;
+        this.fileId = fileId;
     }
 
     public int getId() {
@@ -59,6 +61,14 @@ public class Candidate {
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     @Override

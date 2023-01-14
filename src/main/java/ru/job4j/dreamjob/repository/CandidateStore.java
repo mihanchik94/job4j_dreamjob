@@ -17,9 +17,9 @@ public class CandidateStore {
     private final AtomicInteger counter = new AtomicInteger(3);
 
     public CandidateStore() {
-        candidates.put(1, new Candidate(1, "Semenov Igor", "Without experience", LocalDateTime.now(), 1));
-        candidates.put(2, new Candidate(2, "Gerasimova Ekaterina", "Experience: 3 years", LocalDateTime.now(), 2));
-        candidates.put(3, new Candidate(3, "Sidorova Elena", "Experience: 1 year", LocalDateTime.now(), 3));
+        candidates.put(1, new Candidate(1, "Semenov Igor", "Without experience", LocalDateTime.now(), 1, 0));
+        candidates.put(2, new Candidate(2, "Gerasimova Ekaterina", "Experience: 3 years", LocalDateTime.now(), 2, 0));
+        candidates.put(3, new Candidate(3, "Sidorova Elena", "Experience: 1 year", LocalDateTime.now(), 3, 0));
     }
 
     public Collection<Candidate> findAll() {

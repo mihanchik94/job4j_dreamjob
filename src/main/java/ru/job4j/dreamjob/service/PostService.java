@@ -1,12 +1,14 @@
 package ru.job4j.dreamjob.service;
 
+import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Post;
 
 import java.util.Collection;
 
 public interface PostService {
-    void save(Post post);
-    void update(Post post);
+    void save(Post post, FileDto image);
+    boolean deleteById(int id);
+    void update(Post post, FileDto image);
     Collection<Post> findAll();
     Post findById(int id);
 }
