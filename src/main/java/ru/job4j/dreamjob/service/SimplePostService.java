@@ -5,18 +5,18 @@ import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.File;
 import ru.job4j.dreamjob.model.Post;
-import ru.job4j.dreamjob.repository.MemoryPostStore;
+import ru.job4j.dreamjob.repository.PostRepository;
 
 import java.util.Collection;
 
 @ThreadSafe
 @Service
 public class SimplePostService implements PostService {
-    private final MemoryPostStore postRepository;
+    private final PostRepository postRepository;
     private final FileService fileService;
 
-    public SimplePostService(MemoryPostStore postRepository, FileService fileService) {
-        this.postRepository = postRepository;
+    public SimplePostService(PostRepository sql2oPostRepository, FileService fileService) {
+        this.postRepository = sql2oPostRepository;
         this.fileService = fileService;
     }
 

@@ -1,13 +1,25 @@
 package ru.job4j.dreamjob.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 
 public class Post {
+
+    public static final Map<String, String> COLUMN_MAPPING = Map.of(
+            "id", "id",
+            "name", "name",
+            "description", "description",
+            "creation_date", "created",
+            "visible", "visible",
+            "city_id", "cityId",
+            "file_id", "fileId"
+    );
+
     private int id;
     private String name;
     private String description;
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
     private boolean visible;
     private int cityId;
     private int fileId;
