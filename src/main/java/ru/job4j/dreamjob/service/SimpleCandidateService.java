@@ -5,25 +5,26 @@ import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
 import ru.job4j.dreamjob.model.File;
-import ru.job4j.dreamjob.repository.CandidateStore;
+import ru.job4j.dreamjob.repository.CandidateRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @ThreadSafe
 @Service
-public class SimpleCandidateService  implements CandidateService {
-    private final CandidateStore candidateRepository;
+public class SimpleCandidateService implements CandidateService {
+    private final CandidateRepository candidateRepository;
     private final FileService fileService;
 
-    public SimpleCandidateService(CandidateStore candidateRepository, FileService fileService) {
-        this.candidateRepository = candidateRepository;
+    public SimpleCandidateService(CandidateRepository sql2oCandidateRepository, FileService fileService) {
+        this.candidateRepository = sql2oCandidateRepository;
         this.fileService = fileService;
     }
 
     @Override
     public void save(Candidate candidate, FileDto image) {
         saveNewFile(candidate, image);
-        candidateRepository.add(candidate);
+        candidateRepository.save(candidate);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class SimpleCandidateService  implements CandidateService {
     }
 
     @Override
-    public Candidate findById(int id) {
+    public Optional<Candidate> findById(int id) {
         return candidateRepository.findById(id);
     }
 

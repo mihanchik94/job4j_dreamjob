@@ -7,7 +7,6 @@ import org.sql2o.Query;
 import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.Post;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 @ThreadSafe

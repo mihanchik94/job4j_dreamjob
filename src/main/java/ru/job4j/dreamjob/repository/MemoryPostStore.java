@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
 @Repository
-public class MemoryPostStore implements PostRepository{
+public class MemoryPostStore implements PostRepository {
     private final Map<Integer, Post> posts = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(3);
 

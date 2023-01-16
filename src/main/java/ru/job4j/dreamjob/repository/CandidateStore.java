@@ -7,12 +7,13 @@ import ru.job4j.dreamjob.model.Candidate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
 @Repository
-public class CandidateStore {
+public class CandidateStore implements CandidateRepository {
     private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final AtomicInteger counter = new AtomicInteger(3);
 
@@ -22,22 +23,28 @@ public class CandidateStore {
         candidates.put(3, new Candidate(3, "Sidorova Elena", "Experience: 1 year", LocalDateTime.now(), 3, 0));
     }
 
+    @Override
     public Collection<Candidate> findAll() {
         return candidates.values();
     }
 
-    public void add(Candidate candidate) {
+    @Override
+    public Candidate save(Candidate candidate) {
         int id = counter.incrementAndGet();
         candidate.setId(id);
         candidate.setCreated(LocalDateTime.now());
         candidates.put(id, candidate);
+        return candidate;
     }
 
-    public Candidate findById(int id) {
-        return candidates.get(id);
+    @Override
+    public Optional<Candidate> findById(int id) {
+        Candidate candidate = candidates.get(id);
+        return Optional.ofNullable(candidate);
     }
 
-    public void update(Candidate candidate) {
-        candidates.replace(candidate.getId(), candidates.get(candidate.getId()), candidate);
+    @Override
+    public boolean update(Candidate candidate) {
+        return candidates.replace(candidate.getId(), candidates.get(candidate.getId()), candidate);
     }
 }
