@@ -11,4 +11,5 @@ public interface CandidateService {
     void update(Candidate candidate, FileDto image);
     Collection<Candidate> findAll();
     Optional<Candidate> findById(int id);
+    boolean deleteById(int id);
 }

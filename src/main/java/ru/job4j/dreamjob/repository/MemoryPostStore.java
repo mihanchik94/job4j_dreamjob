@@ -7,6 +7,7 @@ import ru.job4j.dreamjob.model.Post;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,11 +24,12 @@ public class MemoryPostStore implements PostRepository {
     }
 
     @Override
-    public void add(Post post) {
+    public Post add(Post post) {
         int id = counter.incrementAndGet();
         post.setId(id);
         post.setCreated(LocalDateTime.now());
         posts.put(id, post);
+        return post;
     }
 
     @Override
@@ -41,12 +43,13 @@ public class MemoryPostStore implements PostRepository {
     }
 
     @Override
-    public Post findById(int id) {
-        return posts.get(id);
+    public Optional<Post> findById(int id) {
+        Post post = posts.get(id);
+        return Optional.ofNullable(post);
     }
 
     @Override
-    public void updatePost(Post post) {
-        posts.replace(post.getId(), posts.get(post.getId()), post);
+    public boolean updatePost(Post post) {
+        return posts.replace(post.getId(), posts.get(post.getId()), post);
     }
 }

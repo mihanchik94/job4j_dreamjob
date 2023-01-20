@@ -8,6 +8,7 @@ import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.repository.PostRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @ThreadSafe
 @Service
@@ -28,12 +29,12 @@ public class SimplePostService implements PostService {
 
     @Override
     public boolean deleteById(int id) {
-        Post post = findById(id);
-        if (post == null) {
+        Optional<Post> post = findById(id);
+        if (post.isEmpty()) {
             return false;
         }
         boolean isDeleted = postRepository.deleteById(id);
-        fileService.deleteById(post.getFileId());
+        fileService.deleteById(post.get().getFileId());
         return isDeleted;
     }
 
@@ -60,7 +61,7 @@ public class SimplePostService implements PostService {
     }
 
     @Override
-    public Post findById(int id) {
+    public Optional<Post>findById(int id) {
         return postRepository.findById(id);
     }
 }

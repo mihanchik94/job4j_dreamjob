@@ -10,4 +10,5 @@ public interface CandidateRepository {
     Candidate save(Candidate candidate);
     Optional<Candidate> findById(int id);
     boolean update(Candidate candidate);
+    boolean deleteById(int id);
 }

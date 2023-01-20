@@ -47,4 +47,9 @@ public class CandidateStore implements CandidateRepository {
     public boolean update(Candidate candidate) {
         return candidates.replace(candidate.getId(), candidates.get(candidate.getId()), candidate);
     }
+
+    @Override
+    public boolean deleteById(int id) {
+        return candidates.remove(id) != null;
+    }
 }

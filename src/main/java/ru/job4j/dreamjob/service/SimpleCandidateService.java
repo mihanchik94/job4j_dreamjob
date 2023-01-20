@@ -53,4 +53,15 @@ public class SimpleCandidateService implements CandidateService {
         File file = fileService.save(image);
         candidate.setFileId(file.getId());
     }
+
+    @Override
+    public boolean deleteById(int id) {
+        Optional<Candidate> candidate = findById(id);
+        if (candidate.isEmpty()) {
+            return false;
+        }
+        boolean isDeleted = candidateRepository.deleteById(id);
+        fileService.deleteById(candidate.get().getFileId());
+        return isDeleted;
+    }
 }

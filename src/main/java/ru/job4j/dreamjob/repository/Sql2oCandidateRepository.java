@@ -76,4 +76,14 @@ public class Sql2oCandidateRepository implements CandidateRepository {
             return affectedRows > 0;
         }
     }
+
+    @Override
+    public boolean deleteById(int id) {
+        try (Connection connection = sql2o.open()) {
+            Query query = connection.createQuery("DELETE from candidates where id = :id")
+                    .addParameter("id", id);
+            int affectedRows = query.executeUpdate().getResult();
+            return affectedRows > 0;
+        }
+    }
 }

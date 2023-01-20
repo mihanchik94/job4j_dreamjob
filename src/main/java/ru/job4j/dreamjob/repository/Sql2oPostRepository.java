@@ -8,6 +8,7 @@ import org.sql2o.Sql2o;
 import ru.job4j.dreamjob.model.Post;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @ThreadSafe
 @Repository
@@ -20,7 +21,7 @@ public class Sql2oPostRepository implements PostRepository {
     }
 
     @Override
-    public void add(Post post) {
+    public Post add(Post post) {
         try (Connection connection = sql2o.open()) {
             String sql = """
                     INSERT INTO posts(name, description, creation_date, visible, city_id, file_id)
@@ -35,6 +36,7 @@ public class Sql2oPostRepository implements PostRepository {
                     .addParameter("fileId", post.getFileId());
             int generatedId = query.executeUpdate().getKey(Integer.class);
             post.setId(generatedId);
+            return post;
         }
     }
 
@@ -57,16 +59,17 @@ public class Sql2oPostRepository implements PostRepository {
     }
 
     @Override
-    public Post findById(int id) {
+    public Optional<Post> findById(int id) {
         try (Connection connection = sql2o.open()) {
             Query query = connection.createQuery("SELECT * from posts where id = :id");
             query.addParameter("id", id);
-            return query.setColumnMappings(Post.COLUMN_MAPPING).executeAndFetchFirst(Post.class);
+            Post post = query.setColumnMappings(Post.COLUMN_MAPPING).executeAndFetchFirst(Post.class);
+            return Optional.ofNullable(post);
         }
     }
 
     @Override
-    public void updatePost(Post post) {
+    public boolean updatePost(Post post) {
         try (Connection connection = sql2o.open()) {
             String sql = """
                     UPDATE posts
@@ -82,7 +85,8 @@ public class Sql2oPostRepository implements PostRepository {
                     .addParameter("cityId", post.getCityId())
                     .addParameter("fileId", post.getFileId())
                     .addParameter("id", post.getId());
-            query.executeUpdate();
+            int affectedRows = query.executeUpdate().getResult();
+            return affectedRows > 0;
         }
     }
 }
