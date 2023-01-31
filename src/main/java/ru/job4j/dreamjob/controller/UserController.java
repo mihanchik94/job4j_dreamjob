@@ -22,6 +22,20 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@ModelAttribute User user, Model model) {
+        Optional<User> userOptional = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
+        if (userOptional.isEmpty()) {
+            model.addAttribute("error", "Почта или пароль введены неверно");
+            return "login";
+        }
+        return "redirect:/posts";
+    }
 
     @GetMapping("/register")
     public String getRegistrationPage() {

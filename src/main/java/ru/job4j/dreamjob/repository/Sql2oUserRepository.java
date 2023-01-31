@@ -42,7 +42,7 @@ public class Sql2oUserRepository implements UserRepository {
     public Optional<User> findByEmailAndPassword(String email, String password) {
         try (Connection connection = sql2o.open()) {
             String sql = """
-                    SELECT * from users where email = :email and password = password
+                    SELECT * from users where email = :email and password = :password
                     """;
             Query query = connection.createQuery(sql)
                     .addParameter("email", email)
