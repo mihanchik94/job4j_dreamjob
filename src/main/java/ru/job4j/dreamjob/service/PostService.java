@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface PostService {
-    void save(Post post, FileDto image);
+    Post save(Post post, FileDto image);
     boolean deleteById(int id);
-    void update(Post post, FileDto image);
+    boolean update(Post post, FileDto image);
     Collection<Post> findAll();
     Optional<Post> findById(int id);
 }

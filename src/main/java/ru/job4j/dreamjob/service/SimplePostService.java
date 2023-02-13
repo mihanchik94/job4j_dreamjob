@@ -22,9 +22,9 @@ public class SimplePostService implements PostService {
     }
 
     @Override
-    public void save(Post post, FileDto image) {
+    public Post save(Post post, FileDto image) {
         saveNewFile(post, image);
-        postRepository.add(post);
+        return postRepository.add(post);
     }
 
     @Override
@@ -44,15 +44,13 @@ public class SimplePostService implements PostService {
     }
 
     @Override
-    public void update(Post post, FileDto image) {
-        if (image.getContent().length == 0) {
-            postRepository.updatePost(post);
-        } else {
+    public boolean update(Post post, FileDto image) {
+        if (image.getContent().length != 0) {
             int oldFieldId = post.getFileId();
             saveNewFile(post, image);
             fileService.deleteById(oldFieldId);
-            postRepository.updatePost(post);
         }
+        return postRepository.updatePost(post);
     }
 
     @Override

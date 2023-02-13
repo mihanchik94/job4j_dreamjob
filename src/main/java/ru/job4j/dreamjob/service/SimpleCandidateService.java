@@ -22,21 +22,19 @@ public class SimpleCandidateService implements CandidateService {
     }
 
     @Override
-    public void save(Candidate candidate, FileDto image) {
+    public Candidate save(Candidate candidate, FileDto image) {
         saveNewFile(candidate, image);
-        candidateRepository.save(candidate);
+        return candidateRepository.save(candidate);
     }
 
     @Override
-    public void update(Candidate candidate, FileDto image) {
-        if (image.getContent().length == 0) {
-            candidateRepository.update(candidate);
-        } else {
+    public boolean update(Candidate candidate, FileDto image) {
+        if (image.getContent().length != 0) {
             int oldFileId = candidate.getFileId();
             saveNewFile(candidate, image);
             fileService.deleteById(oldFileId);
-            candidateRepository.update(candidate);
         }
+        return candidateRepository.update(candidate);
     }
 
     @Override
